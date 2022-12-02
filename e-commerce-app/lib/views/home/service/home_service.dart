@@ -1,6 +1,5 @@
-import 'dart:io';
-import 'package:beginer_bloc/views/home/model/home_model.dart';
-import 'package:dio/dio.dart';
+import 'package:beginer_bloc/views/home/home_shelf.dart';
+import '../../../core/const/packagesShelf/packages_shelf.dart';
 
 abstract class IGeneralService {
   IGeneralService(

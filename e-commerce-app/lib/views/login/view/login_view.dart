@@ -1,9 +1,7 @@
-import 'package:beginer_bloc/views/login/service/login_service.dart';
-import 'package:beginer_bloc/views/home/view/home_view.dart';
-import 'package:beginer_bloc/views/login/viewModel/login_cubit.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:beginer_bloc/views/login/login_shelf.dart';
+import 'package:beginer_bloc/views/register/view/register_view.dart';
+import '../../../core/const/packagesShelf/packages_shelf.dart';
+import '../../home/home_shelf.dart';
 
 class LoginView extends StatelessWidget {
   LoginView({Key? key}) : super(key: key);
@@ -16,6 +14,7 @@ class LoginView extends StatelessWidget {
   final String appBarTitle = "Cubit Login";
   final String buttonTitle = "Login";
   final String baseUrl = "https://reqres.in/api";
+  final String accountText = "Don't have an account?";
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +55,7 @@ class LoginView extends StatelessWidget {
                 height: MediaQuery.of(context).size.height * 0.03,
               ),
               passwordField(),
+              dontHaveAccountText(context),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.03,
               ),
@@ -64,6 +64,24 @@ class LoginView extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget dontHaveAccountText(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => RegisterView(),
+            ));
+      },
+      child: Align(
+          alignment: Alignment.centerRight,
+          child: Text(
+            accountText,
+            style: const TextStyle(color: Colors.purple),
+          )),
     );
   }
 

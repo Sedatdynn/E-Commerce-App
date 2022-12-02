@@ -1,8 +1,8 @@
 import 'package:beginer_bloc/views/home/model/home_model.dart';
 import 'package:beginer_bloc/views/home/view/detail_view.dart';
-import 'package:beginer_bloc/core/extension/const/border/border_radi.dart';
-import 'package:beginer_bloc/core/extension/const/responsive/responsive.dart';
-import 'package:beginer_bloc/views/home/viewModel/home_cubit.dart';
+import 'package:beginer_bloc/core/const/border/border_radi.dart';
+import 'package:beginer_bloc/core/const/responsive/responsive.dart';
+import 'package:beginer_bloc/views/home/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -40,14 +40,16 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
         body: Padding(
       padding: context.minAllPadding,
-      child: Column(
-        children: [
-          welcomeField(context, welcomeText),
-          SizedBox(
-            height: context.height * 0.80,
-            child: gridViewBuildField(context, items),
-          )
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            welcomeField(context, welcomeText),
+            SizedBox(
+              height: context.dynamicHeight(0.80),
+              child: gridViewBuildField(context, items),
+            )
+          ],
+        ),
       ),
     ));
   }
@@ -55,8 +57,8 @@ class _HomeViewState extends State<HomeView> {
   GridView gridViewBuildField(BuildContext context, List<ProductModel> items) {
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-        mainAxisExtent: context.height * 0.3,
-        maxCrossAxisExtent: context.height * 0.4,
+        mainAxisExtent: context.dynamicHeight(0.3),
+        maxCrossAxisExtent: context.dynamicHeight(0.4),
       ),
       itemCount: items.length,
       itemBuilder: (context, index) {
@@ -84,10 +86,10 @@ class _HomeViewState extends State<HomeView> {
 
   Positioned selectButtonField(BuildContext context) {
     return Positioned(
-      right: context.height * 0.01,
-      top: context.height * 0.01,
+      right: context.dynamicHeight(0.01),
+      top: context.dynamicHeight(0.01),
       child: Container(
-        height: context.height * 0.06,
+        height: context.dynamicHeight(0.06),
         decoration: BoxDecoration(
             color: Colors.greenAccent.shade100,
             borderRadius: BorderRadi.extremeLowCircular),
@@ -121,7 +123,7 @@ class _HomeViewState extends State<HomeView> {
               borderRadius: BorderRadi.extremeLowCircular,
               child: Image.network(
                 items[index].image.toString(),
-                height: context.height * 0.15,
+                height: context.dynamicHeight(0.15),
               )),
           Expanded(
             child: Padding(
@@ -165,7 +167,7 @@ class _HomeViewState extends State<HomeView> {
   Container welcomeField(BuildContext context, String welcomeText) {
     return Container(
       width: context.width,
-      height: context.height * 0.15,
+      height: context.dynamicHeight(0.15),
       decoration: BoxDecoration(
           color: Colors.orange.shade100,
           borderRadius: const BorderRadius.only(

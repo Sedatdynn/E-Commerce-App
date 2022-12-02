@@ -13,8 +13,9 @@ class HomeCubit extends Cubit<HomeStates> {
 
   List<ProductModel> allProduct = [];
   Future<void> fetchAllProduct() async {
+    final a = await generalService.fetchProductItems();
     try {
-      allProduct = (await generalService.fetchProductItems());
+      allProduct = a;
       emit(HomeItemsLoaded(allProduct));
     } catch (e) {
       emit(HomeError(e.toString()));

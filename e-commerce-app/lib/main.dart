@@ -1,10 +1,7 @@
-import 'package:beginer_bloc/views/home/view/home_view.dart';
-import 'package:beginer_bloc/service/network_manager.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'views/home/service/home_service.dart';
-import 'views/home/viewModel/home_cubit.dart';
+import 'package:beginer_bloc/core/const/packagesShelf/packages_shelf.dart';
+import 'package:beginer_bloc/views/home/home_shelf.dart';
+import 'package:beginer_bloc/views/login/view/login_view.dart';
+import 'service/network_manager.dart';
 
 void main() {
   runApp(const MyApp());
@@ -40,7 +37,7 @@ class MyApp extends StatelessWidget {
                     BoxDecoration(borderRadius: BorderRadius.circular(200))),
             primarySwatch: Colors.purple,
           ),
-          home: const HomeView()),
+          home: LoginView()),
     );
   }
 }

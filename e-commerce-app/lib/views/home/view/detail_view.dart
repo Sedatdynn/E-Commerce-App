@@ -2,8 +2,8 @@
 import 'package:beginer_bloc/views/home/model/home_model.dart';
 import 'package:flutter/material.dart';
 
-import 'package:beginer_bloc/core/extension/const/border/border_radi.dart';
-import 'package:beginer_bloc/core/extension/const/responsive/responsive.dart';
+import 'package:beginer_bloc/core/const/border/border_radi.dart';
+import 'package:beginer_bloc/core/const/responsive/responsive.dart';
 
 class DetailView extends StatefulWidget {
   final List<ProductModel> items;
@@ -55,7 +55,7 @@ class _DetailViewState extends State<DetailView> {
                       child: Image.network(
                         widget.items[0].image.toString(),
                         fit: BoxFit.contain,
-                        height: context.height * 0.30,
+                        height: context.dynamicHeight(0.30),
                       )),
                 ],
               ),
@@ -65,7 +65,7 @@ class _DetailViewState extends State<DetailView> {
                 decoration: BoxDecoration(
                     color: Colors.grey.shade200,
                     borderRadius: BorderRadi.midCircular),
-                height: context.height * 0.25,
+                height: context.dynamicHeight(0.25),
                 width: context.width,
                 child: Padding(
                   padding: context.midAllPadding,
@@ -89,7 +89,7 @@ class _DetailViewState extends State<DetailView> {
                         decoration: BoxDecoration(
                             color: Colors.orange.shade100,
                             borderRadius: BorderRadi.midCircular),
-                        height: context.height * 0.1,
+                        height: context.dynamicHeight(0.1),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
