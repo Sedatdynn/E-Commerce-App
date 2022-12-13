@@ -9,7 +9,7 @@ abstract class IGeneralService {
   final Dio dio;
   String item;
 
-  Future<List<ProductModel>> fetchProductItems();
+  Future<List<Products>?> fetchProductItems();
 }
 
 class GeneralService extends IGeneralService {
@@ -19,24 +19,19 @@ class GeneralService extends IGeneralService {
   );
 
   @override
-  Future<List<ProductModel>> fetchProductItems() async {
-    List<ProductModel> products = [];
-    final response = await dio.get("/$item");
-    final resData = response.data;
-    if (response.statusCode == HttpStatus.ok) {
-      for (dynamic item in resData) {
-        ProductModel proModel = ProductModel(
-          id: item["id"],
-          title: item["title"],
-          price: item["price"],
-          description: item["description"],
-          category: item["category"],
-          image: item["image"],
-        );
-        products.add(proModel);
+  Future<List<Products>?> fetchProductItems() async {
+    try {
+      final response = await dio.get("/$item");
+      var resData = response.data;
+      if (response.statusCode == HttpStatus.ok) {
+        List<Products>? products = ProductModel.fromJson(resData).products;
+
+        return products;
       }
-      return products;
+    } catch (e) {
+      throw e.toString();
     }
+
     throw "Something went wrong";
   }
 }

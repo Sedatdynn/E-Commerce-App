@@ -6,7 +6,7 @@ import 'package:beginer_bloc/core/const/border/border_radi.dart';
 import 'package:beginer_bloc/core/const/responsive/responsive.dart';
 
 class DetailView extends StatefulWidget {
-  final List<ProductModel> items;
+  final List<Products> items;
   const DetailView({
     Key? key,
     required this.items,
@@ -53,9 +53,10 @@ class _DetailViewState extends State<DetailView> {
                   ClipRRect(
                       borderRadius: BorderRadi.extremeLowCircular,
                       child: Image.network(
-                        widget.items[0].image.toString(),
-                        fit: BoxFit.contain,
+                        widget.items[0].images![0].toString(),
+                        fit: BoxFit.fill,
                         height: context.dynamicHeight(0.30),
+                        width: context.width,
                       )),
                 ],
               ),

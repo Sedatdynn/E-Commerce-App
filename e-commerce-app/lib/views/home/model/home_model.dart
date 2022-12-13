@@ -1,62 +1,88 @@
 class ProductModel {
-  dynamic id;
-  String? title;
-  dynamic price;
-  String? description;
-  String? category;
-  String? image;
-  //Rating? rating;
+  List<Products>? products;
+  int? total;
+  int? skip;
+  int? limit;
 
-  ProductModel({
-    this.id,
-    this.title,
-    this.price,
-    this.description,
-    this.category,
-    this.image,
-    // this.rating
-  });
+  ProductModel({this.products, this.total, this.skip, this.limit});
 
   ProductModel.fromJson(Map<String, dynamic> json) {
+    if (json['products'] != null) {
+      products = <Products>[];
+      json['products'].forEach((v) {
+        products!.add(Products.fromJson(v));
+      });
+    }
+    total = json['total'];
+    skip = json['skip'];
+    limit = json['limit'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (products != null) {
+      data['products'] = products!.map((v) => v.toJson()).toList();
+    }
+    data['total'] = total;
+    data['skip'] = skip;
+    data['limit'] = limit;
+    return data;
+  }
+}
+
+class Products {
+  dynamic id;
+  String? title;
+  String? description;
+  dynamic price;
+  dynamic discountPercentage;
+  dynamic rating;
+  dynamic stock;
+  String? brand;
+  String? category;
+  String? thumbnail;
+  List<String>? images;
+
+  Products(
+      {this.id,
+      this.title,
+      this.description,
+      this.price,
+      this.discountPercentage,
+      this.rating,
+      this.stock,
+      this.brand,
+      this.category,
+      this.thumbnail,
+      this.images});
+
+  Products.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
-    price = json['price'];
     description = json['description'];
+    price = json['price'];
+    discountPercentage = json['discountPercentage'];
+    rating = json['rating'];
+    stock = json['stock'];
+    brand = json['brand'];
     category = json['category'];
-    image = json['image'];
-    // rating = json['rating'] != null ? Rating.fromJson(json['rating']) : null;
+    thumbnail = json['thumbnail'];
+    images = json['images'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['title'] = title;
-    data['price'] = price;
     data['description'] = description;
+    data['price'] = price;
+    data['discountPercentage'] = discountPercentage;
+    data['rating'] = rating;
+    data['stock'] = stock;
+    data['brand'] = brand;
     data['category'] = category;
-    data['image'] = image;
-    // if (rating != null) {
-    //   data['rating'] = rating!.toJson();
-//    }
+    data['thumbnail'] = thumbnail;
+    data['images'] = images;
     return data;
   }
 }
-
-// class Rating {
-//   double? rate;
-//   int? count;
-
-//   Rating({this.rate, this.count});
-
-//   Rating.fromJson(Map<String, dynamic> json) {
-//     rate = json['rate'];
-//     count = json['count'];
-//   }
-
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = <String, dynamic>{};
-//     data['rate'] = rate;
-//     data['count'] = count;
-//     return data;
-  //  }
-//}

@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 class ProjectNetworkManager {
   ProjectNetworkManager._() {
-    _dio = Dio(BaseOptions(baseUrl: "https://fakestoreapi.com"));
+    _dio = Dio(BaseOptions(baseUrl: "https://dummyjson.com"));
   }
   late final Dio _dio;
 

@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
                     BoxDecoration(borderRadius: BorderRadius.circular(200))),
             primarySwatch: Colors.purple,
           ),
-          home: LoginView()),
+          home: const HomeView()),
     );
   }
 }

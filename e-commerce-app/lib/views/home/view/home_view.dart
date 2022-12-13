@@ -27,16 +27,16 @@ class _HomeViewState extends State<HomeView> {
         return const LoadingView();
       } else if (state is HomeItemsLoaded) {
         return buildBody(
-            context, welcomeText, context.watch<HomeCubit>().allProduct);
+            context, welcomeText, context.read<HomeCubit>().allProduct);
       } else if (state is HomeError) {
         return const ErrorView();
       }
-      return const Text("");
+      return const Center(child: Text("aaaaaaaa"));
     });
   }
 
   Scaffold buildBody(
-      BuildContext context, String welcomeText, List<ProductModel> items) {
+      BuildContext context, String welcomeText, List<Products> items) {
     return Scaffold(
         body: Padding(
       padding: context.minAllPadding,
@@ -54,7 +54,7 @@ class _HomeViewState extends State<HomeView> {
     ));
   }
 
-  GridView gridViewBuildField(BuildContext context, List<ProductModel> items) {
+  GridView gridViewBuildField(BuildContext context, List<Products> items) {
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
         mainAxisExtent: context.dynamicHeight(0.3),
@@ -112,8 +112,7 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Card productCardField(
-      List<ProductModel> items, int index, BuildContext context) {
+  Card productCardField(List<Products> items, int index, BuildContext context) {
     const String price = "Urun fiyati:";
     return Card(
       color: Colors.orange.shade100,
@@ -122,8 +121,9 @@ class _HomeViewState extends State<HomeView> {
           ClipRRect(
               borderRadius: BorderRadi.extremeLowCircular,
               child: Image.network(
-                items[index].image.toString(),
-                height: context.dynamicHeight(0.15),
+                items[index].images![0].toString(),
+                fit: BoxFit.fill,
+                height: context.dynamicHeight(0.2),
               )),
           Expanded(
             child: Padding(

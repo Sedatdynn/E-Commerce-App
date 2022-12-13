@@ -11,14 +11,16 @@ class HomeCubit extends Cubit<HomeStates> {
   ) : super(HomeInitial());
   final IGeneralService generalService;
 
-  List<ProductModel> allProduct = [];
+  List<Products> allProduct = [];
   Future<void> fetchAllProduct() async {
-    final a = await generalService.fetchProductItems();
+    final a = (await generalService.fetchProductItems()) ?? [];
+    print(allProduct.toString());
     try {
       allProduct = a;
       emit(HomeItemsLoaded(allProduct));
     } catch (e) {
-      emit(HomeError(e.toString()));
+      rethrow;
+      // emit(HomeError(e.toString()));
     }
   }
 }
@@ -30,8 +32,7 @@ class HomeInitial extends HomeStates {}
 class HomeLoading extends HomeStates {}
 
 class HomeItemsLoaded extends HomeStates {
-  final List<ProductModel> items;
-
+  final List<Products> items;
   HomeItemsLoaded(this.items);
 }
 
