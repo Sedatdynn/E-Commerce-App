@@ -1,4 +1,5 @@
 import 'package:beginer_bloc/views/home/model/home_model.dart';
+import 'package:beginer_bloc/views/home/model/user_model.dart';
 import 'package:beginer_bloc/views/home/view/detail_view.dart';
 import 'package:beginer_bloc/core/const/border/border_radi.dart';
 import 'package:beginer_bloc/core/const/responsive/responsive.dart';
@@ -16,8 +17,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  final String welcomeText = "Welcome to\nE-Commerce App";
-  bool isSelected = false;
+  final String welcomeText = "Welcome \n";
 
   @override
   @override
@@ -62,6 +62,12 @@ class _HomeViewState extends State<HomeView> {
       ),
       itemCount: items.length,
       itemBuilder: (context, index) {
+        final a = context.watch<HomeCubit>().userData!.basket;
+        final List<int?> b = [];
+        for (var i = 0; i < a!.length; i++) {
+          b.add(a[i].pId! - 1);
+        }
+
         return InkWell(
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
@@ -75,7 +81,57 @@ class _HomeViewState extends State<HomeView> {
             child: Stack(
               children: [
                 productCardField(items, index, context),
-                selectButtonField(context)
+                Positioned(
+                  right: context.dynamicHeight(0.01),
+                  top: context.dynamicHeight(0.01),
+                  child: Container(
+                      height: context.dynamicHeight(0.06),
+                      decoration: BoxDecoration(
+                          color: Colors.greenAccent.shade100,
+                          borderRadius: BorderRadi.extremeLowCircular),
+                      child: BlocConsumer<HomeCubit, HomeStates>(
+                        listener: (context, state) {},
+                        builder: (context, state) {
+                          return IconButton(
+                              onPressed: (() async {
+                                b.clear();
+                                for (var i = 0; i < a.length; i++) {
+                                  b.add(a[i].pId! - 1);
+                                }
+                                if (b.contains(index)) {
+                                  context.read<HomeCubit>().proId = index + 1;
+                                  await context
+                                      .read<HomeCubit>()
+                                      .deletebasketProduct();
+                                  setState(() {
+                                    items[index].isSelected =
+                                        !items[index].isSelected!;
+                                  });
+                                } else {
+                                  context.read<HomeCubit>().proId = index + 1;
+                                  await context
+                                      .read<HomeCubit>()
+                                      .basketProduct();
+                                  context.read<HomeCubit>().isinBasket!
+                                      ? setState(() {
+                                          items[index].isSelected =
+                                              !items[index].isSelected!;
+                                        })
+                                      : debugPrint("hey error basket!!");
+                                }
+                              }),
+                              icon: b.contains(index)
+                                  ? const Icon(
+                                      Icons.shopping_cart_rounded,
+                                      color: Colors.purple,
+                                    )
+                                  : const Icon(
+                                      Icons.shopping_cart_outlined,
+                                      color: Colors.purple,
+                                    ));
+                        },
+                      )),
+                )
               ],
             ),
           ),
@@ -84,33 +140,33 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Positioned selectButtonField(BuildContext context) {
-    return Positioned(
-      right: context.dynamicHeight(0.01),
-      top: context.dynamicHeight(0.01),
-      child: Container(
-        height: context.dynamicHeight(0.06),
-        decoration: BoxDecoration(
-            color: Colors.greenAccent.shade100,
-            borderRadius: BorderRadi.extremeLowCircular),
-        child: IconButton(
-            onPressed: (() {
-              setState(() {
-                isSelected = !isSelected;
-              });
-            }),
-            icon: isSelected
-                ? const Icon(
-                    Icons.shopping_cart_outlined,
-                    color: Colors.purple,
-                  )
-                : const Icon(
-                    Icons.shopping_cart_rounded,
-                    color: Colors.purple,
-                  )),
-      ),
-    );
-  }
+  // Positioned selectButtonField(BuildContext context) {
+  //   return Positioned(
+  //     right: context.dynamicHeight(0.01),
+  //     top: context.dynamicHeight(0.01),
+  //     child: Container(
+  //       height: context.dynamicHeight(0.06),
+  //       decoration: BoxDecoration(
+  //           color: Colors.greenAccent.shade100,
+  //           borderRadius: BorderRadi.extremeLowCircular),
+  //       child: IconButton(
+  //           onPressed: (() {
+  //             setState(() {
+  //                = !isSelected;
+  //             });
+  //           }),
+  //           icon: isSelected
+  //               ? const Icon(
+  //                   Icons.shopping_cart_outlined,
+  //                   color: Colors.purple,
+  //                 )
+  //               : const Icon(
+  //                   Icons.shopping_cart_rounded,
+  //                   color: Colors.purple,
+  //                 )),
+  //     ),
+  //   );
+  // }
 
   Card productCardField(List<Products> items, int index, BuildContext context) {
     const String price = "Urun fiyati:";
@@ -165,6 +221,8 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Container welcomeField(BuildContext context, String welcomeText) {
+    final GetUserModel? userData = context.watch<HomeCubit>().userData;
+
     return Container(
       width: context.width,
       height: context.dynamicHeight(0.15),
@@ -174,7 +232,7 @@ class _HomeViewState extends State<HomeView> {
               bottomRight: Radius.circular(55), topLeft: Radius.circular(55))),
       child: Center(
         child: Text(
-          welcomeText,
+          "$welcomeText ${userData!.username.toString()}",
           style: Theme.of(context)
               .textTheme
               .headline5

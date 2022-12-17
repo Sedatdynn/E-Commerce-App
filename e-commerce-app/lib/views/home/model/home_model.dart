@@ -42,6 +42,7 @@ class Products {
   String? category;
   String? thumbnail;
   List<String>? images;
+  bool? isSelected = false;
 
   Products(
       {this.id,
@@ -54,7 +55,8 @@ class Products {
       this.brand,
       this.category,
       this.thumbnail,
-      this.images});
+      this.images,
+      this.isSelected});
 
   Products.fromJson(Map<String, dynamic> json) {
     id = json['id'];
