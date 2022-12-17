@@ -3,19 +3,9 @@ import 'package:beginer_bloc/views/login/model/login_response_model.dart';
 import 'package:dio/dio.dart';
 
 abstract class ILoginService {
+  ILoginService(this.dio, this.item);
   final Dio dio;
-  final String loginPath = ILoginServicePath.login.rawValue;
-  ILoginService(this.dio);
-  Future<LoginResponseModel?> postUserLogin(LoginRequestModel model);
-}
+  String item;
 
-enum ILoginServicePath { login }
-
-extension ILoginServicePathExtension on ILoginServicePath {
-  String get rawValue {
-    switch (this) {
-      case ILoginServicePath.login:
-        return "/login";
-    }
-  }
+  Future<bool?> postUserLogin(Map<String, dynamic> loginData);
 }

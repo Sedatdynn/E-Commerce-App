@@ -1,3 +1,4 @@
+import 'package:beginer_bloc/service/network_manager.dart';
 import 'package:beginer_bloc/views/login/login_shelf.dart';
 import 'package:beginer_bloc/views/register/view/register_view.dart';
 import '../../../core/const/packagesShelf/packages_shelf.dart';
@@ -13,15 +14,18 @@ class LoginView extends StatelessWidget {
 
   final String appBarTitle = "Cubit Login";
   final String buttonTitle = "Login";
-  final String baseUrl = "https://reqres.in/api";
+  final String baseUrl = "http://10.0.2.2:8000";
   final String accountText = "Don't have an account?";
-
+// LoginCubit(
+//           formKey, emailController, passwordController,
+//           service: LoginService(Dio(BaseOptions(baseUrl: baseUrl)))),
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => LoginCubit(
           formKey, emailController, passwordController,
-          service: LoginService(Dio(BaseOptions(baseUrl: baseUrl)))),
+          service: LoginService(
+              ProjectNetworkManager.instance.service, "/api/user/login/")),
       child: BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) async {
           if (state is LoginComplete) {
@@ -120,7 +124,7 @@ class LoginView extends StatelessWidget {
 
   TextFormField passwordField() {
     return TextFormField(
-      validator: (value) => (value ?? "").length > 5 ? null : "5ten kucuk",
+      validator: (value) => (value ?? "").length > 3 ? null : "5ten kucuk",
       controller: passwordController,
       decoration: InputDecoration(
           border: OutlineInputBorder(
@@ -132,7 +136,7 @@ class LoginView extends StatelessWidget {
 
   TextFormField emailField() {
     return TextFormField(
-      validator: (value) => (value ?? "").length > 6 ? null : "6 dan kucuk",
+      validator: (value) => (value ?? "").length > 3 ? null : "6 dan kucuk",
       controller: emailController,
       decoration: InputDecoration(
           border: OutlineInputBorder(

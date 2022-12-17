@@ -21,7 +21,7 @@ class GeneralService extends IGeneralService {
   @override
   Future<List<Products>?> fetchProductItems() async {
     try {
-      final response = await dio.get("/$item");
+      final response = await dio.get("/api/products/");
       var resData = response.data;
       if (response.statusCode == HttpStatus.ok) {
         List<Products>? products = ProductModel.fromJson(resData).products;
