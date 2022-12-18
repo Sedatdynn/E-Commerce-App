@@ -1,4 +1,6 @@
 import 'package:beginer_bloc/core/const/packagesShelf/packages_shelf.dart';
+import 'package:beginer_bloc/views/basket/cubit/basket_cubit.dart';
+import 'package:beginer_bloc/views/basket/service/basket_service.dart';
 import 'package:beginer_bloc/views/home/home_shelf.dart';
 import 'package:beginer_bloc/views/login/view/login_view.dart';
 import 'service/network_manager.dart';
@@ -12,13 +14,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) {
-        String productText = "products";
-        return HomeCubit(
-            GeneralService(ProjectNetworkManager.instance.service, productText))
-          ..fetchAllProduct();
-      },
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) {
+            String productText = "products";
+            return HomeCubit(GeneralService(
+                ProjectNetworkManager.instance.service, productText))
+              ..fetchAllProduct();
+          },
+        ),
+        BlocProvider(
+          create: (context) => BasketCubit(
+              GeneralBasketService(ProjectNetworkManager.instance.service)),
+        ),
+      ],
       child: MaterialApp(
           title: 'Flutter Demo',
           debugShowCheckedModeBanner: false,

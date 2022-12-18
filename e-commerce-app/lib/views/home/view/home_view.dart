@@ -1,3 +1,5 @@
+import 'package:beginer_bloc/views/basket/cubit/basket_cubit.dart';
+import 'package:beginer_bloc/views/basket/view/basket_view.dart';
 import 'package:beginer_bloc/views/home/model/home_model.dart';
 import 'package:beginer_bloc/views/home/model/user_model.dart';
 import 'package:beginer_bloc/views/home/view/detail_view.dart';
@@ -6,6 +8,9 @@ import 'package:beginer_bloc/core/const/responsive/responsive.dart';
 import 'package:beginer_bloc/views/home/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../product/widget/error_message.dart';
+import '../../../product/widget/loading_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({
@@ -140,34 +145,6 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  // Positioned selectButtonField(BuildContext context) {
-  //   return Positioned(
-  //     right: context.dynamicHeight(0.01),
-  //     top: context.dynamicHeight(0.01),
-  //     child: Container(
-  //       height: context.dynamicHeight(0.06),
-  //       decoration: BoxDecoration(
-  //           color: Colors.greenAccent.shade100,
-  //           borderRadius: BorderRadi.extremeLowCircular),
-  //       child: IconButton(
-  //           onPressed: (() {
-  //             setState(() {
-  //                = !isSelected;
-  //             });
-  //           }),
-  //           icon: isSelected
-  //               ? const Icon(
-  //                   Icons.shopping_cart_outlined,
-  //                   color: Colors.purple,
-  //                 )
-  //               : const Icon(
-  //                   Icons.shopping_cart_rounded,
-  //                   color: Colors.purple,
-  //                 )),
-  //     ),
-  //   );
-  // }
-
   Card productCardField(List<Products> items, int index, BuildContext context) {
     const String price = "Urun fiyati:";
     return Card(
@@ -224,6 +201,7 @@ class _HomeViewState extends State<HomeView> {
     final GetUserModel? userData = context.watch<HomeCubit>().userData;
 
     return Container(
+      padding: context.midAllPadding,
       width: context.width,
       height: context.dynamicHeight(0.15),
       decoration: BoxDecoration(
@@ -231,44 +209,30 @@ class _HomeViewState extends State<HomeView> {
           borderRadius: const BorderRadius.only(
               bottomRight: Radius.circular(55), topLeft: Radius.circular(55))),
       child: Center(
-        child: Text(
-          "$welcomeText ${userData!.username.toString()}",
-          style: Theme.of(context)
-              .textTheme
-              .headline5
-              ?.copyWith(fontWeight: FontWeight.bold),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "$welcomeText ${userData!.username.toString()}",
+              style: Theme.of(context)
+                  .textTheme
+                  .headline5
+                  ?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            TextButton.icon(
+                onPressed: () {
+                  context.read<BasketCubit>().fetchAllProduct();
+
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const BasketView(),
+                      ));
+                },
+                icon: const Icon(Icons.shopping_cart_sharp),
+                label: const Text("Basket"))
+          ],
         ),
-      ),
-    );
-  }
-}
-
-class ErrorView extends StatelessWidget {
-  final data = "Something wrong";
-  const ErrorView({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text(data),
-      ),
-    );
-  }
-}
-
-class LoadingView extends StatelessWidget {
-  const LoadingView({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: CircularProgressIndicator(),
       ),
     );
   }
