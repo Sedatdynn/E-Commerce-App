@@ -23,6 +23,8 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final String welcomeText = "Welcome \n";
+  final String basketText = "Basket";
+  final String price = "Product price:";
 
   @override
   @override
@@ -146,7 +148,6 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Card productCardField(List<Products> items, int index, BuildContext context) {
-    const String price = "Urun fiyati:";
     return Card(
       color: Colors.orange.shade100,
       child: Column(
@@ -183,7 +184,7 @@ class _HomeViewState extends State<HomeView> {
                       ?.copyWith(color: Colors.grey.shade600),
                 ),
                 Text(
-                  items[index].price.toString(),
+                  "${items[index].price.toString()} €",
                   style: Theme.of(context)
                       .textTheme
                       .subtitle1
@@ -230,7 +231,7 @@ class _HomeViewState extends State<HomeView> {
                       ));
                 },
                 icon: const Icon(Icons.shopping_cart_sharp),
-                label: const Text("Basket"))
+                label: Text(basketText))
           ],
         ),
       ),

@@ -95,12 +95,12 @@ class _DetailViewState extends State<DetailView> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
-                              widget.items[0].price.toString(),
+                              "${widget.items[0].price.toString()} €",
                               style: Theme.of(context)
                                   .textTheme
                                   .subtitle1
                                   ?.copyWith(
-                                      color: Colors.white,
+                                      color: Colors.black,
                                       fontWeight: FontWeight.bold),
                             ),
                             Text(
@@ -109,7 +109,7 @@ class _DetailViewState extends State<DetailView> {
                                   .textTheme
                                   .subtitle1
                                   ?.copyWith(
-                                      color: Colors.white,
+                                      color: Colors.black,
                                       fontWeight: FontWeight.bold),
                             ),
                           ],

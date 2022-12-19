@@ -12,6 +12,7 @@ class BasketCubit extends Cubit<BasketState> {
   final IGeneralBasketService generalService;
 
   List<Products> allProduct = [];
+  double allinBasket = 0.0;
   bool isLoading = false;
 
   Future<void> fetchAllProduct() async {
