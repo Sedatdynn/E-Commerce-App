@@ -45,20 +45,30 @@ class _HomeViewState extends State<HomeView> {
   Scaffold buildBody(
       BuildContext context, String welcomeText, List<Products> items) {
     return Scaffold(
+        appBar: buildAppBar(),
         body: Padding(
-      padding: context.minAllPadding,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            welcomeField(context, welcomeText),
-            SizedBox(
-              height: context.dynamicHeight(0.80),
-              child: gridViewBuildField(context, items),
-            )
-          ],
-        ),
+          padding: context.minAllPadding,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                welcomeField(context, welcomeText),
+                SizedBox(
+                  height: context.dynamicHeight(0.80),
+                  child: gridViewBuildField(context, items),
+                )
+              ],
+            ),
+          ),
+        ));
+  }
+
+  PreferredSize buildAppBar() {
+    return PreferredSize(
+      preferredSize: Size.zero,
+      child: AppBar(
+        backgroundColor: Colors.transparent,
       ),
-    ));
+    );
   }
 
   GridView gridViewBuildField(BuildContext context, List<Products> items) {

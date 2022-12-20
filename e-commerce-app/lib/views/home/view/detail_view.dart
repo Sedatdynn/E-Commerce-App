@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:beginer_bloc/views/home/model/home_model.dart';
+import 'package:beginer_bloc/views/payment/payment_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:beginer_bloc/core/const/border/border_radi.dart';
@@ -86,33 +87,44 @@ class _DetailViewState extends State<DetailView> {
                       SizedBox(
                         height: context.height * 0.02,
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.orange.shade100,
-                            borderRadius: BorderRadi.midCircular),
-                        height: context.dynamicHeight(0.1),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              "${widget.items[0].price.toString()} €",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle1
-                                  ?.copyWith(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              addCardText,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle1
-                                  ?.copyWith(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                            ),
-                          ],
+                      InkWell(
+                        onTap: () {
+                          int price = widget.items[0].price;
+                          double doublePrice = price.toDouble();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      PaymentPageView(totalFee: doublePrice)));
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.orange.shade100,
+                              borderRadius: BorderRadi.midCircular),
+                          height: context.dynamicHeight(0.1),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                "${widget.items[0].price.toString()} €",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1
+                                    ?.copyWith(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                addCardText,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1
+                                    ?.copyWith(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
                         ),
                       )
                     ],

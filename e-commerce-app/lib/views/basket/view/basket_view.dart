@@ -39,7 +39,7 @@ class _BasketViewState extends State<BasketView> {
       appBar: AppBar(
         elevation: 0,
         title: const Text(selectProductsToCreateOrder),
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.brown,
       ),
       body: Padding(
         padding: context.minAllPadding,

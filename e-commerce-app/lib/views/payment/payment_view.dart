@@ -31,7 +31,7 @@ class _PaymentPageViewState extends State<PaymentPageView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.orange.shade100,
+        backgroundColor: Colors.brown,
       ),
       body: Padding(
         padding: context.midAllPadding,
